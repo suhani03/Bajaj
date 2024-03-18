@@ -1,0 +1,35 @@
+from flask import Flask, request, jsonify
+
+app = Flask(_name_)
+
+@app.route('/process_data', methods=['POST'])
+def process_data():
+    data = request.json
+    
+    # Extracting user details
+    user_id = data.get('user_id')
+    email = data.get('email')
+    roll_number = data.get('roll_number')
+    
+    # Extracting array
+    input_array = data.get('array')
+    
+    # Processing arrays
+    even_numbers = [num for num in input_array if num % 2 == 0 and isinstance(num, int)]
+    odd_numbers = [num for num in input_array if num % 2 != 0 and isinstance(num, int)]
+    uppercase_alphabets = [char.upper() for char in input_array if isinstance(char, str) and char.isalpha()]
+    
+    response_data = {
+        'status': 'Success',
+        'user_id': user_id,
+        'email': email,
+        'college_roll_number': roll_number,
+        'even_numbers': even_numbers,
+        'odd_numbers': odd_numbers,
+        'uppercase_alphabets': uppercase_alphabets
+    }
+    
+    return jsonify(response_data)
+
+if _name_ == '_main_':
+    app.run(debug=True)
